@@ -2,7 +2,27 @@ import 'package:flutter/material.dart';
 import 'eventpicker.dart'; 
 import 'package:http/http.dart' as http; 
 import 'dart:convert'; 
-import 'eventpicker.dart';
+
+void getData(String apiKey, teamNumber) async {
+  final response = await http.get(
+    Uri.parse('https://www.thebluealliance.com/api/v3/team/frc$teamNumber/events/2025'),
+    headers: {
+      'X-TBA-Auth-Key': apiKey,
+    },
+  );
+  if (response.statusCode == 200) {
+    String data = response.body;
+    var decodedData = jsonDecode(data);
+      List<String> eventNames = [];
+
+    for (var event in decodedData) {
+      eventNames.add(event['name']);
+    }
+    print(eventNames);
+  } else {
+    print(response.statusCode);
+  }
+}
 
 void main() {
   runApp(const MyApp());
@@ -79,6 +99,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () async {
                 String teamNumber = _teamNumberController.text;
                 String apiKey = _apiKeyController.text;
+                getData(apiKey, teamNumber);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => EventPicker()),
