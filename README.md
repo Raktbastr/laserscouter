@@ -1,16 +1,17 @@
-# laserscouter
+![Laser Scouter](https://laserrobotics.org/wp-content/uploads/2025/02/laserscouterlogo.png)
 
-A FRC scouting and statistics app. Developed by Laser Robotics
+A FRC scouting and statistics app. Developed by Laser Robotics.
 
-## Getting Started
+# How to contribute
 
-This project is a starting point for a Flutter application.
+1. Install Flutter language plugins to your IDE.
+2. Clone the repo and open it.
+3. Start editing!
 
-A few resources to get you started if this is your first Flutter project:
+# How to test
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Run the command `flutter run` in your terminal while inside project folder.
+2. Open the app in your desired platform.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* If you plan to test on an iPhone, you must have a Apple Developer account and a MacOS device with Xcode. I reccomend [this guide](https://www.geeksforgeeks.org/how-to-install-flutter-app-on-ios/)
+
