@@ -3,7 +3,7 @@ import 'eventpicker.dart';
 import 'package:http/http.dart' as http; 
 import 'dart:convert'; 
 
-void getData(String apiKey, teamNumber) async {
+void getData(String apiKey, String teamNumber, Function(List<String>, List<String>) callback) async {
   final response = await http.get(
     Uri.parse('https://www.thebluealliance.com/api/v3/team/frc$teamNumber/events/2025'),
     headers: {
@@ -13,12 +13,14 @@ void getData(String apiKey, teamNumber) async {
   if (response.statusCode == 200) {
     String data = response.body;
     var decodedData = jsonDecode(data);
-      List<String> eventNames = [];
+    List<String> eventNames = [];
+    List<String> eventCodes = [];
 
     for (var event in decodedData) {
       eventNames.add(event['name']);
+      eventCodes.add(event['key']);
     }
-    print(eventNames);
+    callback(eventNames, eventCodes);
   } else {
     print(response.statusCode);
   }
@@ -64,7 +66,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,11 +100,18 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () async {
                 String teamNumber = _teamNumberController.text;
                 String apiKey = _apiKeyController.text;
-                getData(apiKey, teamNumber);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => EventPicker()),
-                );
+                getData(apiKey, teamNumber, (eventNames, eventCodes) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EventPicker(
+                      eventNames: eventNames,
+                      eventCodes: eventCodes,
+                      apiKey: apiKey,
+                      ),
+                    ),
+                  );
+                });
               },
               child: const Text('Login'),
             ),
@@ -113,4 +121,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
