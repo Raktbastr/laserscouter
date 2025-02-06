@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void getData(String apiKey, String eventCode, Function(List<String>, List<String>) callback) async {
   final response = await http.get(
@@ -35,6 +36,90 @@ class TeamPicker extends StatefulWidget {
   _TeamPickerState createState() => _TeamPickerState();
 }
 
+
+class NotesPage extends StatefulWidget {
+  final String teamCode;
+  final String eventCode;
+  final String teamName;
+  NotesPage({required this.teamCode, required this.teamName, required this.eventCode});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Notes for $teamName'),
+      ),
+      body: Center(
+        child: Text('Notes for team $teamCode - $teamName'),
+      ),
+    );
+  }
+  @override
+  _NotesPageState createState() => _NotesPageState();
+}
+
+class _NotesPageState extends State<NotesPage> {
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadNotes();
+  }
+
+  _loadNotes() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _controller1.text = prefs.getString('${widget.teamCode}_${widget.eventCode}_note1') ?? '';
+      _controller2.text = prefs.getString('${widget.teamCode}_${widget.eventCode}_note2') ?? '';
+      _controller3.text = prefs.getString('${widget.teamCode}_${widget.eventCode}_note3') ?? '';
+    });
+  }
+
+  _saveNotes() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('${widget.teamCode}_${widget.eventCode}_note1', _controller1.text);
+    await prefs.setString('${widget.teamCode}_${widget.eventCode}_note2', _controller2.text);
+    await prefs.setString('${widget.teamCode}_${widget.eventCode}_note3', _controller3.text);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Notes for ${widget.teamName}'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: _saveNotes,
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _controller1,
+              decoration: InputDecoration(labelText: 'Note 1'),
+            ),
+            TextField(
+              controller: _controller2,
+              decoration: InputDecoration(labelText: 'Note 2'),
+            ),
+            TextField(
+              controller: _controller3,
+              decoration: InputDecoration(labelText: 'Note 3'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _TeamPickerState extends State<TeamPicker> {
   List<String> teamNames = [];
   List<String> teamCodes = [];
@@ -64,6 +149,16 @@ class _TeamPickerState extends State<TeamPicker> {
           return ListTile(
             title: Text('${teamCodes[index]} - ${teamNames[index]}'),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotesPage(
+                    teamName: teamNames[index],
+                    eventCode: widget.eventCode,
+                    teamCode: teamCodes[index],
+                  ),
+                ),
+              );
             },
           );
         },

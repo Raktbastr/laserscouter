@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'eventpicker.dart'; 
 import 'package:http/http.dart' as http; 
 import 'dart:convert'; 
+import 'package:shared_preferences/shared_preferences.dart';
 
 void getData(String apiKey, String teamNumber, Function(List<String>, List<String>) callback) async {
   final response = await http.get(
@@ -39,8 +40,10 @@ class MyApp extends StatelessWidget {
       title: 'Login Page',
       theme: ThemeData(
         useMaterial3: true,
+        primaryColor: const Color.fromARGB(255, 19, 81, 179),
         appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(color: Colors.white), 
+          color: Color.fromARGB(255, 19, 81, 179),
+          iconTheme: IconThemeData(color: Colors.white),
         ),
       ),
       home: const LoginPage(),
@@ -58,6 +61,24 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _teamNumberController = TextEditingController();
   final TextEditingController _apiKeyController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedData();
+  }
+
+  Future<void> _loadSavedData() async {
+    final prefs = await SharedPreferences.getInstance();
+    _teamNumberController.text = prefs.getString('teamNumber') ?? '';
+    _apiKeyController.text = prefs.getString('apiKey') ?? '';
+  }
+
+  Future<void> _saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('teamNumber', _teamNumberController.text);
+    await prefs.setString('apiKey', _apiKeyController.text);
+  }
 
   @override
   void dispose() {
@@ -98,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () async {
+                await _saveData();
                 String teamNumber = _teamNumberController.text;
                 String apiKey = _apiKeyController.text;
                 getData(apiKey, teamNumber, (eventNames, eventCodes) {
