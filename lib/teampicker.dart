@@ -135,6 +135,11 @@ class _TeamPickerState extends State<TeamPicker> {
     });
   }
 
+  void _shareEvent() {
+    // Add your share logic here
+    print('Share button pressed');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,6 +147,12 @@ class _TeamPickerState extends State<TeamPicker> {
         title: const Text('Event', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 19, 81, 179),
         iconTheme: const IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.share),
+            onPressed: _shareEvent,
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: teamCodes.length,

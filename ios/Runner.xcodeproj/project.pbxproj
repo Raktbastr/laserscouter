@@ -114,7 +114,6 @@
 				9C069CD02D68820101E2D5E2 /* Pods-RunnerTests.release.xcconfig */,
 				438412F0DE9985BC1C3BBF0F /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -478,7 +477,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.laserrobotics.LaserScouter.laserscouter;
+				PRODUCT_BUNDLE_IDENTIFIER = org.laserrobotics.LaserScouter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -661,7 +660,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.laserrobotics.LaserScouter.laserscouter;
+				PRODUCT_BUNDLE_IDENTIFIER = org.laserrobotics.LaserScouter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -684,7 +683,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.laserrobotics.LaserScouter.laserscouter;
+				PRODUCT_BUNDLE_IDENTIFIER = org.laserrobotics.LaserScouter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
