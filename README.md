@@ -7,6 +7,7 @@ Input a team number and a TBA API key then select your event. Click on a team an
 # What is planned
 
 * Breakdowns of match statistics
+* Scouting questions, these are examples to test out input
 * Stat comparisons
 * Full release by 2025 Laser Lights Off Season!
 
