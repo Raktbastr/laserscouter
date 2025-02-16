@@ -151,12 +151,12 @@ class _NotesPageState extends State<NotesPage> {
               keyboardType: TextInputType.multiline,
             ),
             CheckboxListTile(
-              title: Text('Can Score Alge'),
-              value: _switchvalue.text.contains('Can Score Alge'),
+              title: Text('Can Score Algae'),
+              value: _switchvalue.text.contains('Can Score Algae'),
               onChanged: (bool? value) {
               setState(() {
                 if (value == true) {
-                _switchvalue.text = 'Yes ';
+                _switchvalue.text = 'Can Score Algae ';
                 } else {
                 _switchvalue.text = '';
                 }
@@ -164,12 +164,12 @@ class _NotesPageState extends State<NotesPage> {
               },
             ),
             CheckboxListTile(
-              title: Text('Cannot Score Alge'),
-              value: _switchvalue.text.contains('Cannot Score Alge'),
+              title: Text('Cannot Score Algae'),
+              value: _switchvalue.text.contains('Cannot Score Algae'),
               onChanged: (bool? value) {
               setState(() {
                 if (value == true) {
-                _switchvalue.text = 'No ';
+                _switchvalue.text = 'Cannot Score Algae ';
                 } else {
                 _switchvalue.text = '';
                 }
@@ -218,7 +218,7 @@ class _TeamPickerState extends State<TeamPicker> {
     header.add('Team Number');
     header.add('Bot Position');
     header.add('Auton Rundown');
-    header.add('Can Score Alge');
+    header.add('Can Score Algae');
     header.add('Coral Level');
     List<List<String>> dataLists = [];
     for (int i = 0; i < teamCodes.length; i++) {
@@ -227,11 +227,11 @@ class _TeamPickerState extends State<TeamPicker> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String botPosition = prefs.getString('${teamCodes[i]}_${widget.eventCode}_note1') ?? '';
       String autonRundown = prefs.getString('${teamCodes[i]}_${widget.eventCode}_note2') ?? '';
-      String canScoreAlge = prefs.getString('${teamCodes[i]}_${widget.eventCode}_note3') ?? '';
+      String canScoreAlgae = prefs.getString('${teamCodes[i]}_${widget.eventCode}_note3') ?? '';
       String coralLevel = prefs.getString('${teamCodes[i]}_${widget.eventCode}_note4') ?? '0.0';
       data.add(botPosition);
       data.add(autonRundown);
-      data.add(canScoreAlge);
+      data.add(canScoreAlgae);
       data.add(coralLevel);
       dataLists.add(data);
     }
